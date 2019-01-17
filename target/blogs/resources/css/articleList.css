@@ -1,0 +1,16 @@
+.artucleDiv{
+	width: 100%;
+	margin-bottom: 20px;
+	padding: 10px;
+	min-height: 100px;
+	background-color: rgba(34,34,34,0.9);
+	color: #00bcd4;
+	opacity: 0.8
+}
+.describe{
+	margin-left: 5px;
+	margin-right: 20px;
+}
+.artucleList{
+	min-width: 380px;
+}

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blogs.mapper.ArticleMapper">
+    <!-- 添加文章 -->
+    <insert id="addArticle" parameterType="com.blogs.entity.Article">
+        insert into article
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="atid!=null">
+                atid,
+            </if>
+            <if test="articleTitle!=null">
+                article_title
+            </if>
+            <if test="articleContent!=null">
+                article_content
+            </if>
+            <if test="accessNumber!=null">
+                access_number
+            </if>
+        </trim>
+        value
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="atid!=null">
+                #{atid},
+            </if>
+            <if test="articleTitle!=null">
+                #{article_title},
+            </if>
+            <if test="articleContent!=null">
+                #{article_content},
+            </if>
+            <if test="accessNumber!=null">
+                #{access_number}
+            </if>
+        </trim>
+    </insert>
+
+    <!-- 更新文章 -->
+    <update id="updateArticle" parameterType="com.blogs.entity.Article">
+        update article
+        <trim prefix="set" suffixOverrides=",">
+            <if test="atid!=null">
+                atid = #{atid},
+            </if>
+            <if test="articleTitle!=null">
+                article_title = #{article_title},
+            </if>
+            <if test="articleContent!=null">
+                article_content = #{article_content},
+            </if>
+            <if test="accessNumber!=null">
+                access_number = #{access_number}
+            </if>
+        </trim>
+    </update>
+
+    <!-- 删除文章 -->
+    <delete id="deleteArticle">
+        delete from article where aid=#{aid}
+    </delete>
+
+    <!-- 查询文章详情 -->
+    <select id="findArticle" parameterType="int" resultType="com.blogs.entity.Article">
+        select * from article where aid=#{aid}
+    </select>
+
+    <!-- 查询文章简介集合根据指定字段排序 -->
+    <select id="findArticleListByAccessNumber" resultType="com.blogs.entity.Article">
+        select aid,atid,article_type_name,article_title,create_time,update_time,visit_number,estimate_number
+        from article order by #{field} desc limit ${pageIndex},${pageSize}
+    </select>
+
+    <!-- 根据分类查询文章简介集合 -->
+    <select id="findArticleListByAccessType" parameterType="java.util.Map" resultType="com.blogs.entity.Article">
+        select aid,atid,article_title,LEFT(article_content,100),create_time,update_time,access_number
+        from article order by create_time desc limit ${pageIndex},${pageSize}
+    </select>
+</mapper>

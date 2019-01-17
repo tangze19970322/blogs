@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blogs.mapper.TagsMapper">
+    <select id="findAllTags" resultType="com.blogs.entity.Tags">
+        SELECT * FROM tags
+    </select>
+
+    <delete id="delTags">
+        DELETE FROM tags WHERE tid=#{tid}
+    </delete>
+
+    <update id="updateOrInsertTags" parameterType="java.util.List">
+       INSERT INTO tags(tid,tags_name,tags_color)
+      Values
+      <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+          NULL,#{item.tagsName},#{item.tagsColor}
+      </foreach>
+      ON DUPLICATE KEY UPDATE
+      tags_name=VALUES(tags_name),
+      tags_color=VALUES(tags_color)
+    </update>
+</mapper>
